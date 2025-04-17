@@ -36,7 +36,7 @@ const router = createRouter({
                     component: GymPayment
                 },
                 {
-                    path: "payment-success",
+                    path: "payment-success/:id",
                     name: "PaymentSuccess",
                     component: PaymentSuccess
                 }

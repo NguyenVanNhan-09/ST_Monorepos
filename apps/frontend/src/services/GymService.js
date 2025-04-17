@@ -10,7 +10,19 @@ const getGymById = (id) => {
     return Axios.get(url);
 }
 
+const ceateAuthGym = (payload) => {
+    const url = "/auth-gyms";
+    return Axios.post(url, payload);
+}
+
+const getAuthGymById = (id) => {
+    const url = `/auth-gyms/${id}`;
+    return Axios.get(url);
+}
+
 export const gymsServices = {
     getAllGyms,
-    getGymById
+    getGymById,
+    ceateAuthGym,
+    getAuthGymById
 }

@@ -113,7 +113,7 @@
                       <p class="font-medium">{{ gym.membershipType }}</p>
                       <p class="text-sm text-gray-600">
                         {{
-                          gym.status !== 'expired' ? `Hết hạn: ${gym.expiryDate}` : `Đã hết hạn từ: ${gym.expiryDate}`
+                          gym.status !== 'expired' ? `Hết hạn: ${gym.endDate}` : `Đã hết hạn từ: ${gym.endDate}`
                         }}
                       </p>
                     </div>
@@ -263,10 +263,10 @@ const registeredGyms = ref([
     image: 'https://placehold.co/600x400',
     status: 'active',
     membershipType: 'Premium Membership',
-    expiryDate: '31/12/2023',
+    endDate: '31/12/2023',
     membershipId: 'EFC-10045872',
     hours: '5:00 AM - 11:00 PM',
-    joinDate: '01/01/2023'
+    startDate: '01/01/2023'
   },
   {
     id: 2,
@@ -275,10 +275,10 @@ const registeredGyms = ref([
     image: 'https://placehold.co/600x400',
     status: 'expiring',
     membershipType: 'Basic Membership',
-    expiryDate: '15/11/2023',
+    endDate: '15/11/2023',
     membershipId: 'PLG-20087654',
     hours: '6:00 AM - 10:00 PM',
-    joinDate: '15/05/2023'
+    startDate: '15/05/2023'
   },
   {
     id: 3,
@@ -287,10 +287,10 @@ const registeredGyms = ref([
     image: 'https://placehold.co/600x400',
     status: 'expired',
     membershipType: 'Elite Membership',
-    expiryDate: '30/09/2023',
+    endDate: '30/09/2023',
     membershipId: 'CFZ-30012345',
     hours: '5:30 AM - 9:30 PM',
-    joinDate: '30/03/2023'
+    startDate: '30/03/2023'
   },
   {
     id: 4,
@@ -299,10 +299,10 @@ const registeredGyms = ref([
     image: 'https://placehold.co/600x400',
     status: 'active',
     membershipType: 'Annual Membership',
-    expiryDate: '15/08/2024',
+    endDate: '15/08/2024',
     membershipId: 'UF-40056789',
     hours: '24/7 Access',
-    joinDate: '15/08/2023'
+    startDate: '15/08/2023'
   },
   {
     id: 5,
@@ -311,10 +311,10 @@ const registeredGyms = ref([
     image: 'https://placehold.co/600x400',
     status: 'active',
     membershipType: 'Premium Membership',
-    expiryDate: '01/03/2024',
+    endDate: '01/03/2024',
     membershipId: 'SC-50034567',
     hours: '6:00 AM - 11:00 PM',
-    joinDate: '01/03/2023'
+    startDate: '01/03/2023'
   }
 ]);
 

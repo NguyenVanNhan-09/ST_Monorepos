@@ -228,6 +228,7 @@
                   </div>
                   <p class="text-gray-600 text-sm mb-3">{{ plan.description }}</p>
                   <button
+                      @click="handlePayment(gym, plan)"
                       class="w-full py-2 text-sm font-medium bg-primary text-white rounded-md hover:bg-primary/90 transition-colors">
                     Select Plan
                   </button>
@@ -304,6 +305,7 @@ import {
 } from 'lucide-vue-next';
 import {useRoute, useRouter} from "vue-router";
 import {gymsServices} from "@/services/GymService.js";
+import formatDate from "@/utils/formatDate.js";
 
 const route = useRoute();
 const router = useRouter();
@@ -329,6 +331,45 @@ const fetchGymDetails = async (id) => {
     console.error("Error fetching gym details:", error);
   }
 };
+
+const handlePayment = (gym, selsectMembershipPlans) => {
+  const now = new Date();
+  const startDate = formatDate(now);
+
+  let endDate = new Date(now);
+  switch (selsectMembershipPlans?.period) {
+    case 'Monthly':
+      endDate.setMonth(endDate.getMonth() + 1);
+      break;
+    case 'Quarterly':
+      endDate.setMonth(endDate.getMonth() + 3);
+      break;
+    case 'Yearly':
+      endDate.setFullYear(endDate.getFullYear() + 1);
+      break;
+    default:
+      console.error("Invalid membership period");
+      return;
+  }
+  endDate = formatDate(endDate);
+
+  const newPayment = {
+    name: gym.name,
+    address: gym.address,
+    heroImage: gym.heroImage,
+    rating: gym.rating,
+    hours: gym.hours,
+    reviews: gym.reviews,
+    plan: {
+      ...selsectMembershipPlans,
+      startDate: startDate,
+      endDate: endDate
+    },
+  }
+  localStorage.setItem('payment', JSON.stringify(newPayment))
+  router.push({name: 'Payment',})
+}
+
 
 onMounted(() => {
   const gymId = route.params.id;
