@@ -26,19 +26,19 @@ const toggleMobileMenu = () => {
         </div>
 
         <nav class="hidden md:flex space-x-8">
-          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Trang chủ</a>
-          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Phòng tập</a>
-          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Lớp học</a>
-          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Huấn luyện viên</a>
-          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Giới thiệu</a>
+          <a href="/" class="text-gray-700 hover:text-primary transition-colors">Home</a>
+          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Gyms</a>
+          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Classes</a>
+          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Trainers</a>
+          <a href="#" class="text-gray-700 hover:text-primary transition-colors">About</a>
         </nav>
 
         <div class="flex items-center space-x-4">
           <button class="hidden md:block px-4 py-2 text-sm font-medium text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition-colors">
-            Đăng nhập
+            Sign In
           </button>
           <button class="hidden md:block px-4 py-2 text-sm font-medium bg-primary text-white rounded-md hover:bg-primary/90 transition-colors">
-            Đăng ký
+            Join Now
           </button>
           <MenuIcon class="h-6 w-6 md:hidden cursor-pointer" @click="toggleMobileMenu" />
         </div>
@@ -47,18 +47,18 @@ const toggleMobileMenu = () => {
       <!-- Mobile menu -->
       <div v-if="mobileMenuOpen" class="md:hidden mt-4 pb-4">
         <nav class="flex flex-col space-y-3">
-          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Trang chủ</a>
-          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Phòng tập</a>
-          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Lớp học</a>
-          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Huấn luyện viên</a>
-          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Giới thiệu</a>
+          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Home</a>
+          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Gyms</a>
+          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Classes</a>
+          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Trainers</a>
+          <a href="#" class="text-gray-700 hover:text-primary transition-colors">About</a>
         </nav>
         <div class="flex space-x-4 mt-4">
           <button class="px-4 py-2 text-sm font-medium text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition-colors">
-            Đăng nhập
+            Sign In
           </button>
           <button class="px-4 py-2 text-sm font-medium bg-primary text-white rounded-md hover:bg-primary/90 transition-colors">
-            Đăng ký
+            Join Now
           </button>
         </div>
       </div>

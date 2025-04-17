@@ -5,16 +5,16 @@
       <div class="container mx-auto px-4">
         <!-- Breadcrumb -->
         <div class="flex items-center text-sm text-gray-600 mb-6">
-          <a href="#" class="hover:text-primary transition-colors">Trang chủ</a>
+          <router-link to="/" class="hover:text-primary transition-colors">Home</router-link>
           <ChevronRightIcon class="h-4 w-4 mx-2"/>
-          <a href="#" class="hover:text-primary transition-colors">Phòng tập</a>
+          <router-link to="/gyms" class="hover:text-primary transition-colors">Gyms</router-link>
           <ChevronRightIcon class="h-4 w-4 mx-2"/>
-          <a href="#" class="hover:text-primary transition-colors">Elite Fitness Center</a>
+          <router-link :to="`/gyms/${gym?.id}`" class="hover:text-primary transition-colors">{{ gym?.name }}</router-link>
           <ChevronRightIcon class="h-4 w-4 mx-2"/>
-          <span class="text-gray-900 font-medium">Thanh toán</span>
+          <span class="text-gray-900 font-medium">Payment</span>
         </div>
 
-        <h1 class="text-3xl font-bold mb-8">Thanh toán thành viên</h1>
+        <h1 class="text-3xl font-bold mb-8">Membership Payment</h1>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <!-- Left column - Payment form -->
@@ -37,12 +37,12 @@
                         i <= 4 ? 'text-yellow-400' : 'text-gray-300'
                       ]"/>
                     </div>
-                    <span class="text-sm text-gray-600 ml-2">({{ gym?.reviews?.length }} đánh giá)</span>
+                    <span class="text-sm text-gray-600 ml-2">({{ gym?.reviews?.length }} reviews)</span>
                   </div>
 
                   <div class="mt-3 flex items-center">
                     <span
-                        class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Đang mở cửa</span>
+                        class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Open Now</span>
                     <span class="text-sm text-gray-600 ml-2">{{ gym?.hours }}</span>
                   </div>
                 </div>
@@ -51,27 +51,27 @@
 
             <!-- Personal information -->
             <div class="bg-white rounded-lg border p-6">
-              <h2 class="text-lg font-bold mb-4">Thông tin cá nhân</h2>
+              <h2 class="text-lg font-bold mb-4">Personal Information</h2>
 
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">Họ</label>
+                  <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
                   <input
                       type="text"
                       id="firstName"
                       v-model="formData.firstName"
                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                      placeholder="Nhập họ của bạn"
+                      placeholder="Enter your first name"
                   />
                 </div>
                 <div>
-                  <label for="lastName" class="block text-sm font-medium text-gray-700 mb-1">Tên</label>
+                  <label for="lastName" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
                   <input
                       type="text"
                       id="lastName"
                       v-model="formData.lastName"
                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                      placeholder="Nhập tên của bạn"
+                      placeholder="Enter your last name"
                   />
                 </div>
               </div>
@@ -88,31 +88,31 @@
               </div>
 
               <div class="mb-4">
-                <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Số điện thoại</label>
+                <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
                 <input
                     type="tel"
                     id="phone"
                     v-model="formData.phone"
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="Nhập số điện thoại của bạn"
+                    placeholder="Enter your phone number"
                 />
               </div>
 
               <div>
-                <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Địa chỉ</label>
+                <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Address</label>
                 <input
                     type="text"
                     id="address"
                     v-model="formData.address"
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="Nhập địa chỉ của bạn"
+                    placeholder="Enter your address"
                 />
               </div>
             </div>
 
             <!-- Payment method -->
             <div class="bg-white rounded-lg border p-6">
-              <h2 class="text-lg font-bold mb-4">Phương thức thanh toán</h2>
+              <h2 class="text-lg font-bold mb-4">Payment Method</h2>
 
               <div class="space-y-4 mb-6">
                 <div class="flex items-center">
@@ -124,7 +124,7 @@
                       class="h-4 w-4 text-primary focus:ring-primary border-gray-300"
                   />
                   <label for="creditCard" class="ml-2 flex items-center">
-                    <span class="font-medium mr-2">Thẻ tín dụng/ghi nợ</span>
+                    <span class="font-medium mr-2">Credit/Debit Card</span>
                     <div class="flex space-x-1">
                       <img src="https://placehold.co/40x25" alt="Visa" class="h-6"/>
                       <img src="https://placehold.co/40x25" alt="Mastercard" class="h-6"/>
@@ -142,7 +142,7 @@
                       class="h-4 w-4 text-primary focus:ring-primary border-gray-300"
                   />
                   <label for="bankTransfer" class="ml-2 flex items-center">
-                    <span class="font-medium">Chuyển khoản ngân hàng</span>
+                    <span class="font-medium">Bank Transfer</span>
                   </label>
                 </div>
 
@@ -155,7 +155,7 @@
                       class="h-4 w-4 text-primary focus:ring-primary border-gray-300"
                   />
                   <label for="momo" class="ml-2 flex items-center">
-                    <span class="font-medium mr-2">Ví MoMo</span>
+                    <span class="font-medium mr-2">MoMo Wallet</span>
                     <img src="https://placehold.co/40x25" alt="MoMo" class="h-6"/>
                   </label>
                 </div>
@@ -178,7 +178,7 @@
               <!-- Credit card form -->
               <div v-if="formData.paymentMethod === 'creditCard'" class="border-t pt-4">
                 <div class="mb-4">
-                  <label for="cardNumber" class="block text-sm font-medium text-gray-700 mb-1">Số thẻ</label>
+                  <label for="cardNumber" class="block text-sm font-medium text-gray-700 mb-1">Card Number</label>
                   <div class="relative">
                     <input
                         type="text"
@@ -193,7 +193,7 @@
 
                 <div class="grid grid-cols-2 gap-4 mb-4">
                   <div>
-                    <label for="expiryDate" class="block text-sm font-medium text-gray-700 mb-1">Ngày hết hạn</label>
+                    <label for="expiryDate" class="block text-sm font-medium text-gray-700 mb-1">Expiry Date</label>
                     <input
                         type="text"
                         id="expiryDate"
@@ -216,7 +216,7 @@
                                       @mouseenter="showCvvTooltip = true" @mouseleave="showCvvTooltip = false"/>
                       <div v-if="showCvvTooltip"
                            class="absolute right-0 bottom-full mb-2 p-2 bg-gray-800 text-white text-xs rounded shadow-lg w-48">
-                        Mã bảo mật 3 chữ số ở mặt sau thẻ của bạn
+                        3-digit security code on the back of your card
                         <div
                             class="absolute bottom-0 right-4 transform translate-y-1/2 rotate-45 w-2 h-2 bg-gray-800"></div>
                       </div>
@@ -225,13 +225,13 @@
                 </div>
 
                 <div>
-                  <label for="cardholderName" class="block text-sm font-medium text-gray-700 mb-1">Tên chủ thẻ</label>
+                  <label for="cardholderName" class="block text-sm font-medium text-gray-700 mb-1">Cardholder Name</label>
                   <input
                       type="text"
                       id="cardholderName"
                       v-model="formData.cardholderName"
                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                      placeholder="Nhập tên chủ thẻ"
+                      placeholder="Enter cardholder name"
                   />
                 </div>
               </div>
@@ -239,23 +239,21 @@
               <!-- Bank transfer instructions -->
               <div v-if="formData.paymentMethod === 'bankTransfer'" class="border-t pt-4">
                 <div class="bg-blue-50 p-4 rounded-md">
-                  <h3 class="font-medium text-blue-800 mb-2">Hướng dẫn chuyển khoản</h3>
+                  <h3 class="font-medium text-blue-800 mb-2">Bank Transfer Instructions</h3>
                   <ul class="text-sm text-blue-700 space-y-1">
-                    <li>Ngân hàng: Vietcombank</li>
-                    <li>Số tài khoản: 1234567890</li>
-                    <li>Chủ tài khoản: CÔNG TY TNHH FITFINDER</li>
-                    <li>Nội dung: [Họ tên] thanh toán Elite Fitness</li>
+                    <li>Bank: Vietcombank</li>
+                    <li>Account Number: 1234567890</li>
+                    <li>Account Holder: FITFINDER LLC</li>
+                    <li>Reference: [Your Name] Elite Fitness payment</li>
                   </ul>
-                  <p class="text-sm text-blue-700 mt-2">Sau khi chuyển khoản, vui lòng chụp màn hình giao dịch và gửi
-                    qua email: support@fitfinder.com</p>
+                  <p class="text-sm text-blue-700 mt-2">After completing the transfer, please take a screenshot of the transaction and send it to: support@fitfinder.com</p>
                 </div>
               </div>
 
               <!-- E-wallet instructions -->
               <div v-if="formData.paymentMethod === 'momo' || formData.paymentMethod === 'vnpay'" class="border-t pt-4">
                 <p class="text-sm text-gray-600 mb-4">
-                  Bạn sẽ được chuyển đến trang thanh toán {{ formData.paymentMethod === 'momo' ? 'MoMo' : 'VNPay' }} sau
-                  khi xác nhận đơn hàng.
+                  You will be redirected to the {{ formData.paymentMethod === 'momo' ? 'MoMo' : 'VNPay' }} payment page after confirming your order.
                 </p>
               </div>
             </div>
@@ -272,11 +270,9 @@
                   />
                 </div>
                 <div class="ml-3 text-sm">
-                  <label for="terms" class="font-medium text-gray-700">Tôi đồng ý với <a href="#"
-                                                                                         class="text-primary hover:underline">Điều
-                    khoản sử dụng</a> và <a href="#" class="text-primary hover:underline">Chính sách bảo mật</a></label>
-                  <p class="text-gray-500 mt-1">Bằng cách đánh dấu vào ô này, bạn đồng ý với các điều khoản và điều kiện
-                    của chúng tôi, bao gồm cả chính sách hoàn tiền và hủy thành viên.</p>
+                  <label for="terms" class="font-medium text-gray-700">I agree to the <a href="#"
+                                                                                         class="text-primary hover:underline">Terms of Use</a> and <a href="#" class="text-primary hover:underline">Privacy Policy</a></label>
+                  <p class="text-gray-500 mt-1">By checking this box, you agree to our terms and conditions, including our refund and membership cancellation policies.</p>
                 </div>
               </div>
             </div>
@@ -285,52 +281,52 @@
           <!-- Right column - Order summary -->
           <div class="space-y-6">
             <div class="bg-white rounded-lg border p-6 sticky top-24">
-              <h2 class="text-lg font-bold mb-4">Tóm tắt đơn hàng</h2>
+              <h2 class="text-lg font-bold mb-4">Order Summary</h2>
 
               <div class="space-y-3 mb-4">
                 <div class="flex justify-between">
-                  <span class="text-gray-600">Gói thành viên</span>
+                  <span class="text-gray-600">Membership Plan</span>
                   <span class="font-medium">{{ gym?.plan?.name }} / {{ gym?.plan?.period }}</span>
                 </div>
                 <div class="flex justify-between">
-                  <span class="text-gray-600">Thời hạn</span>
+                  <span class="text-gray-600">Duration</span>
                   <span class="font-medium">
                     {{
                       gym?.plan?.period === "Monthly" ?
-                          '1 tháng' :
+                          '1 month' :
                           gym?.plan?.period === "Quarterly" ?
-                              '3 tháng' :
+                              '3 months' :
                               gym?.plan?.period === "Yearly" ?
-                                  '1 năm' : ""
+                                  '1 year' : ""
                     }}</span>
                 </div>
                 <div class="flex justify-between">
-                  <span class="text-gray-600">Ngày bắt đầu</span>
+                  <span class="text-gray-600">Start Date</span>
                   <span class="font-medium">{{ gym?.plan?.startDate }}</span>
                 </div>
                 <div class="flex justify-between">
-                  <span class="text-gray-600">Ngày kết thúc</span>
+                  <span class="text-gray-600">End Date</span>
                   <span class="font-medium">{{ gym?.plan?.endDate }}</span>
                 </div>
               </div>
 
               <div class="border-t border-b py-4 my-4 space-y-3">
                 <div class="flex justify-between">
-                  <span class="text-gray-600">Giá gói</span>
+                  <span class="text-gray-600">Plan Price</span>
                   <span class="font-medium">{{ gym?.plan?.price }}</span>
                 </div>
                 <div class="flex justify-between">
-                  <span class="text-gray-600">Phí đăng ký</span>
+                  <span class="text-gray-600">Registration Fee</span>
                   <span class="font-medium">$0</span>
                 </div>
                 <div class="flex justify-between text-green-600">
-                  <span>Giảm giá</span>
+                  <span>Discount</span>
                   <span>${{ gym?.plan?.rabais }}</span>
                 </div>
               </div>
 
               <div class="flex justify-between font-bold text-lg mb-6">
-                <span>Tổng cộng</span>
+                <span>Total</span>
                 <span>${{ gym?.plan?.price - (gym?.plan?.rabais || 0) }}</span>
               </div>
 
@@ -346,11 +342,11 @@
                   ]"
                 >
                   <LockIcon class="h-4 w-4 mr-2"/>
-                  Thanh toán an toàn
+                  Secure Payment
                 </button>
 
                 <div class="text-center text-sm text-gray-500">
-                  <p>Thanh toán an toàn & bảo mật</p>
+                  <p>Safe & secure payment</p>
                   <div class="flex justify-center items-center mt-2 space-x-2">
                     <LockIcon class="h-4 w-4 text-gray-400"/>
                     <ShieldIcon class="h-4 w-4 text-gray-400"/>
@@ -359,7 +355,7 @@
               </div>
 
               <div class="mt-6 border-t pt-4">
-                <h3 class="font-medium mb-2">Cần hỗ trợ?</h3>
+                <h3 class="font-medium mb-2">Need Help?</h3>
                 <div class="flex items-center text-sm text-gray-600">
                   <PhoneIcon class="h-4 w-4 mr-2 text-primary"/>
                   <span>Hotline: 1900 1234</span>
@@ -419,7 +415,7 @@ const formData = ref({
 const submitPayment = async () => {
   try {
     if (!formData.value.termsAccepted) {
-      alert('Vui lòng đồng ý với điều khoản và điều kiện để tiếp tục.');
+      alert('Please agree to the terms and conditions to continue.');
       return;
     }
     const newPaymentData = {
@@ -437,7 +433,7 @@ const submitPayment = async () => {
       }
     };
     const res = await gymsServices.ceateAuthGym(newPaymentData);
-    alert('Thanh toán thành công!');
+    alert('Payment successful!');
     router.push({name: 'PaymentSuccess', params: {id: res.data._id}});
   } catch (error) {
     console.error('Error submitting payment:', error);
@@ -449,33 +445,5 @@ const submitPayment = async () => {
 :root {
   --primary: #f97316;
   --primary-foreground: #ffffff;
-}
-
-.bg-primary {
-  background-color: var(--primary);
-}
-
-.text-primary {
-  color: var(--primary);
-}
-
-.text-primary-foreground {
-  color: var(--primary-foreground);
-}
-
-.hover\:bg-primary\/90:hover {
-  background-color: rgba(249, 115, 22, 0.9);
-}
-
-.focus\:ring-primary:focus {
-  --tw-ring-color: var(--primary);
-}
-
-.border-primary {
-  border-color: var(--primary);
-}
-
-.hover\:bg-primary:hover {
-  background-color: var(--primary);
 }
 </style>

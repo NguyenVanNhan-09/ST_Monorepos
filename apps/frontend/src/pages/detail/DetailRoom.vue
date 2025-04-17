@@ -6,7 +6,7 @@
       <div class="bg-gray-50 py-3 border-b">
         <div class="container mx-auto px-4">
           <div class="flex items-center text-sm text-gray-600">
-            <a href="#" class="hover:text-primary transition-colors">Home</a>
+            <a href="/" class="hover:text-primary transition-colors">Home</a>
             <ChevronRightIcon class="h-4 w-4 mx-2"/>
             <a href="#" class="hover:text-primary transition-colors">Gyms</a>
             <ChevronRightIcon class="h-4 w-4 mx-2"/>
