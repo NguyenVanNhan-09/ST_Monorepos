@@ -6,9 +6,11 @@
   "scripts": {
     "dev:frontend": "pnpm --filter frontend dev",
     "dev:backend": "pnpm --filter backend start:dev",
+    "dev:my-node-project": "pnpm --filter my-node-project start:dev",
     "dev": "concurrently \"pnpm dev:frontend\" \"pnpm dev:backend\"",
     "build:frontend": "pnpm --filter frontend build",
     "build:backend": "pnpm --filter backend build",
+    "build:my-node-project": "pnpm --filter my-node-project build",
     "build": "concurrently \"pnpm build:frontend\" \"pnpm build:backend\""
   },
   "keywords": [],
