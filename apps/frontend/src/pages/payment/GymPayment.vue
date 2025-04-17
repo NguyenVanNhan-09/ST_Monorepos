@@ -331,7 +331,7 @@
 
               <div class="flex justify-between font-bold text-lg mb-6">
                 <span>Tổng cộng</span>
-                <span>${{ gym?.plan?.price - gym?.plan?.rabais }}</span>
+                <span>${{ gym?.plan?.price - (gym?.plan?.rabais || 0) }}</span>
               </div>
 
               <div class="space-y-4">
@@ -432,7 +432,7 @@ const submitPayment = async () => {
         hours: gym.value?.hours,
         name: gym.value?.name,
         rating: gym.value?.rating,
-        totalPrice: gym.value?.plan?.price - gym.value?.plan?.rabais,
+        totalPrice: gym.value?.plan?.price - (gym.value?.plan?.rabais || 0),
         plan: gym.value?.plan,
       }
     };
