@@ -5,7 +5,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-    origin: ['http://localhost:5173', 'st-monorepos-frontend.vercel.app'], // 👈 Cho phép frontend của bạn
+    origin: ['http://localhost:5173', 'https://st-monorepos-frontend.vercel.app'], // 👈 Cho phép frontend của bạn
     credentials: true, // nếu bạn dùng cookie hoặc auth header
   });
 
