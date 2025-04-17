@@ -27,7 +27,7 @@
                   <div class="flex items-center ml-3">
                     <StarIcon class="h-5 w-5 text-yellow-400"/>
                     <span class="ml-1 font-semibold">{{ gym.rating }}</span>
-                    <span class="ml-1 text-sm opacity-80">({{ gym.reviews.length }} reviews)</span>
+                    <span class="ml-1 text-sm opacity-80">({{ gym?.reviews?.length }} reviews)</span>
                   </div>
                 </div>
                 <h1 class="text-3xl md:text-4xl font-bold">{{ gym.name }}</h1>
@@ -181,7 +181,7 @@
               </div>
 
               <div class="space-y-6">
-                <div v-for="(review, index) in gym.reviews.slice(0, 3)" :key="index" class="border-b pb-6">
+                <div v-for="(review, index) in gym?.reviews?.slice(0, 3)" :key="index" class="border-b pb-6">
                   <div class="flex items-start">
                     <img :src="review.userImage" :alt="review.userName" class="w-10 h-10 rounded-full mr-4"/>
                     <div class="flex-1">
@@ -203,7 +203,7 @@
                 </div>
               </div>
 
-              <div class="text-center mt-6" v-if="gym.reviews.length > 3">
+              <div class="text-center mt-6" v-if="gym?.reviews?.length > 3">
                 <button
                     class="px-4 py-2 text-sm font-medium text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition-colors">
                   View All {{ gym.reviews.length }} Reviews
@@ -224,7 +224,7 @@
                      class="pb-4 border-b last:border-0 last:pb-0">
                   <div class="flex justify-between items-start mb-2">
                     <h4 class="font-medium">{{ plan.name }}</h4>
-                    <span class="font-bold text-primary">${{ plan.price }}/{{ plan.period }}</span>
+                    <span class="font-bold text-primary">{{ plan.price }}/{{ plan.period }}</span>
                   </div>
                   <p class="text-gray-600 text-sm mb-3">{{ plan.description }}</p>
                   <button
@@ -288,11 +288,9 @@
 </template>
 
 <script setup>
-import {ref} from 'vue';
+import {onMounted, ref} from 'vue';
 import {
-  Menu as MenuIcon,
   ChevronRight as ChevronRightIcon,
-  Dumbbell as DumbbellIcon,
   Star as StarIcon,
   MapPin as MapPinIcon,
   Calendar as CalendarIcon,
@@ -303,11 +301,12 @@ import {
   Map as MapIcon,
   Mail as MailIcon,
   Globe as GlobeIcon,
-  Facebook as FacebookIcon,
-  Twitter as TwitterIcon,
-  Instagram as InstagramIcon,
-  Youtube as YoutubeIcon
 } from 'lucide-vue-next';
+import {useRoute, useRouter} from "vue-router";
+import {gymsServices} from "@/services/GymService.js";
+
+const route = useRoute();
+const router = useRouter();
 
 // Custom icon for square feet
 const SquareFeetIcon = {
@@ -320,199 +319,20 @@ const SquareFeetIcon = {
   `
 };
 
-// Mobile menu state
-const mobileMenuOpen = ref(false);
+const gym = ref({});
 
-// Toggle mobile menu
-const toggleMobileMenu = () => {
-  mobileMenuOpen.value = !mobileMenuOpen.value;
+const fetchGymDetails = async (id) => {
+  try {
+    const res = await gymsServices.getGymById(id)
+    gym.value = res?.data
+  } catch (error) {
+    console.error("Error fetching gym details:", error);
+  }
 };
 
-// Mock data for the gym detail
-const gym = ref({
-  id: 3,
-  name: "Elite Fitness Center",
-  address: "789 Broadway, New York, NY 10003",
-  phone: "(212) 555-7890",
-  email: "info@elitefitness.com",
-  rating: 4.9,
-  reviews: [
-    {
-      id: 1,
-      userName: "Sarah Johnson",
-      userImage: "https://placehold.co/100x100",
-      rating: 5,
-      date: "March 15, 2023",
-      comment: "This gym has everything you could possibly need! The equipment is top-notch and always well-maintained. The staff is friendly and knowledgeable. I especially love the yoga studio and the pool area."
-    },
-    {
-      id: 2,
-      userName: "Michael Chen",
-      userImage: "https://placehold.co/100x100",
-      rating: 5,
-      date: "February 28, 2023",
-      comment: "Elite Fitness Center has completely transformed my workout routine. The trainers are exceptional and the variety of classes keeps me motivated. Worth every penny!"
-    },
-    {
-      id: 3,
-      userName: "Jessica Williams",
-      userImage: "https://placehold.co/100x100",
-      rating: 4,
-      date: "January 12, 2023",
-      comment: "Great facilities and excellent classes. The only reason I'm not giving 5 stars is because it can get quite crowded during peak hours. Otherwise, it's a fantastic gym."
-    },
-    {
-      id: 4,
-      userName: "David Rodriguez",
-      userImage: "https://placehold.co/100x100",
-      rating: 5,
-      date: "December 5, 2022",
-      comment: "I've been a member for over a year now and I couldn't be happier. The basketball court is my favorite feature, and the juice bar makes the best protein shakes!"
-    },
-    {
-      id: 5,
-      userName: "Emily Thompson",
-      userImage: "https://placehold.co/100x100",
-      rating: 5,
-      date: "November 18, 2022",
-      comment: "The spa services are amazing! After an intense workout, there's nothing better than relaxing in the sauna or getting a massage. Highly recommend this gym to anyone serious about fitness and wellness."
-    }
-  ],
-  price: "$$",
-  description: "Elite Fitness Center is a premium fitness facility offering state-of-the-art equipment, expert personal training, and a wide variety of group fitness classes. Our 45,000 square foot facility features a full-size basketball court, Olympic-size swimming pool, dedicated yoga and pilates studios, and a luxurious spa. We are committed to helping our members achieve their fitness goals in a welcoming, supportive environment.",
-  amenities: [
-    "Olympic-size Swimming Pool",
-    "Sauna & Steam Room",
-    "Full-size Basketball Court",
-    "Dedicated Yoga Studio",
-    "Pilates Studio",
-    "Free Weights Area",
-    "Cardio Equipment Zone",
-    "Functional Training Area",
-    "Luxury Spa Services",
-    "Juice & Smoothie Bar",
-    "Locker Rooms with Showers",
-    "Towel Service",
-    "Free WiFi",
-    "Child Care Services",
-    "Nutritional Counseling"
-  ],
-  hours: "5:00 AM - 11:00 PM",
-  size: "45,000 sq ft",
-  members: "2,500",
-  established: "2010",
-  heroImage: "https://placehold.co/1200x600",
-  gallery: [
-    "https://placehold.co/600x400",
-    "https://placehold.co/600x400",
-    "https://placehold.co/600x400",
-    "https://placehold.co/600x400",
-    "https://placehold.co/600x400",
-    "https://placehold.co/600x400",
-    "https://placehold.co/600x400",
-    "https://placehold.co/600x400"
-  ],
-  schedule: [
-    {
-      time: "6:00 AM",
-      monday: "Spin Class",
-      tuesday: "HIIT",
-      wednesday: "Yoga",
-      thursday: "Body Pump",
-      friday: "Spin Class",
-      saturday: "Bootcamp",
-      sunday: "-"
-    },
-    {
-      time: "9:00 AM",
-      monday: "Pilates",
-      tuesday: "Zumba",
-      wednesday: "Barre",
-      thursday: "Yoga",
-      friday: "Pilates",
-      saturday: "Yoga",
-      sunday: "Meditation"
-    },
-    {
-      time: "12:00 PM",
-      monday: "Body Pump",
-      tuesday: "Spin Class",
-      wednesday: "HIIT",
-      thursday: "Zumba",
-      friday: "Body Pump",
-      saturday: "-",
-      sunday: "-"
-    },
-    {
-      time: "5:30 PM",
-      monday: "HIIT",
-      tuesday: "Yoga",
-      wednesday: "Spin Class",
-      thursday: "Pilates",
-      friday: "Zumba",
-      saturday: "-",
-      sunday: "-"
-    },
-    {
-      time: "7:00 PM",
-      monday: "Yoga",
-      tuesday: "Body Pump",
-      wednesday: "Zumba",
-      thursday: "HIIT",
-      friday: "-",
-      saturday: "-",
-      sunday: "-"
-    }
-  ],
-  trainers: [
-    {
-      name: "Jason Miller",
-      specialty: "Strength & Conditioning",
-      bio: "Former professional athlete with 10+ years of coaching experience. Specializes in strength training and sports performance.",
-      image: "https://placehold.co/300x400"
-    },
-    {
-      name: "Sophia Garcia",
-      specialty: "Yoga & Pilates",
-      bio: "Certified yoga instructor with expertise in multiple yoga styles. Helps members improve flexibility and mindfulness.",
-      image: "https://placehold.co/300x400"
-    },
-    {
-      name: "Marcus Johnson",
-      specialty: "HIIT & Functional Training",
-      bio: "Energetic trainer who specializes in high-intensity workouts and functional movement patterns for all fitness levels.",
-      image: "https://placehold.co/300x400"
-    }
-  ],
-  membershipPlans: [
-    {
-      name: "Basic Membership",
-      price: "79",
-      period: "month",
-      description: "Access to gym equipment, locker rooms, and basic amenities. Perfect for self-guided workouts."
-    },
-    {
-      name: "Premium Membership",
-      price: "129",
-      period: "month",
-      description: "Full access to all facilities including pool, basketball court, and group classes. Includes 1 personal training session per month."
-    },
-    {
-      name: "Elite Membership",
-      price: "199",
-      period: "month",
-      description: "All-inclusive access with 4 personal training sessions per month, priority class booking, and spa services."
-    }
-  ],
-  businessHours: [
-    {day: "Monday", hours: "5:00 AM - 11:00 PM"},
-    {day: "Tuesday", hours: "5:00 AM - 11:00 PM"},
-    {day: "Wednesday", hours: "5:00 AM - 11:00 PM"},
-    {day: "Thursday", hours: "5:00 AM - 11:00 PM"},
-    {day: "Friday", hours: "5:00 AM - 11:00 PM"},
-    {day: "Saturday", hours: "7:00 AM - 9:00 PM"},
-    {day: "Sunday", hours: "7:00 AM - 8:00 PM"}
-  ]
+onMounted(() => {
+  const gymId = route.params.id;
+  fetchGymDetails(gymId);
 });
 </script>
 

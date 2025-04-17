@@ -1,74 +1,25 @@
 <script setup>
-import {ref, computed} from 'vue';
+import {ref, computed, onMounted} from 'vue';
 import {
   Search as SearchIcon,
 } from 'lucide-vue-next';
+import {gymsServices} from "@/services/GymService.js";
+import {useRoute, useRouter} from "vue-router";
 
-// Mock data for gyms
-const gyms = ref([
-  {
-    id: 1,
-    name: "Fitness Plus",
-    address: "123 Main St, New York, NY",
-    rating: 4.8,
-    reviews: 245,
-    price: "123 $",
-    amenities: ["Pool", "Sauna", "24/7 Access", "Personal Training"],
-    image: "https://placehold.co/300x200",
-  },
-  {
-    id: 2,
-    name: "PowerLift Gym",
-    address: "456 Park Ave, New York, NY",
-    rating: 4.6,
-    reviews: 189,
-    price: "$",
-    amenities: ["Free Weights", "Cardio Equipment", "Group Classes"],
-    image: "https://placehold.co/300x200",
-  },
-  {
-    id: 3,
-    name: "Elite Fitness Center",
-    address: "789 Broadway, New York, NY",
-    rating: 4.9,
-    reviews: 312,
-    price: "$$",
-    amenities: ["Spa", "Pool", "Basketball Court", "Yoga Studio", "Juice Bar"],
-    image: "https://placehold.co/300x200",
-  },
-  {
-    id: 4,
-    name: "CrossFit Zone",
-    address: "101 5th Ave, New York, NY",
-    rating: 4.7,
-    reviews: 156,
-    price: "$",
-    amenities: ["CrossFit Equipment", "Group Classes", "Personal Training"],
-    image: "https://placehold.co/300x200",
-  },
-  {
-    id: 5,
-    name: "Urban Fitness",
-    address: "202 Madison Ave, New York, NY",
-    rating: 4.5,
-    reviews: 178,
-    price: "$",
-    amenities: ["Cardio Equipment", "Free Weights", "Group Classes", "Locker Rooms"],
-    image: "https://placehold.co/300x200",
-  },
-  {
-    id: 6,
-    name: "Strength & Conditioning",
-    address: "303 Lexington Ave, New York, NY",
-    rating: 4.4,
-    reviews: 132,
-    price: "$",
-    amenities: ["Strength Equipment", "Cardio Machines", "Personal Training"],
-    image: "https://placehold.co/300x200",
-  },
-]);
+const router = useRouter();
+const route = useRoute();
 
-// Available filters
+const gyms = ref([]);
+
+const fetchGyms = async () => {
+  try {
+    const res = await gymsServices.getAllGyms();
+    gyms.value = res?.data
+  }catch (error) {
+    console.error("Error fetching gyms:", error);
+  }
+}
+
 const filters = ref([
   "All Gyms",
   "24/7 Access",
@@ -78,13 +29,10 @@ const filters = ref([
   "Spa",
 ]);
 
-// Active filters
 const activeFilters = ref(["All Gyms"]);
 
-// Search query
 const searchQuery = ref("");
 
-// Toggle filter function
 const toggleFilter = (filter) => {
   if (filter === "All Gyms") {
     // If "All Gyms" is clicked, make it the only active filter
@@ -109,7 +57,6 @@ const toggleFilter = (filter) => {
   }
 };
 
-// Filtered gyms based on search query and active filters
 const filteredGyms = computed(() => {
   let result = gyms.value;
 
@@ -133,6 +80,17 @@ const filteredGyms = computed(() => {
   }
 
   return result;
+});
+
+const handleDetailGym = (gymId) => {
+  router.push({
+    name: "DetailRoom",
+    params: { id: gymId },
+  });
+};
+
+onMounted(() => {
+  fetchGyms();
 });
 </script>
 
@@ -175,11 +133,12 @@ const filteredGyms = computed(() => {
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div
             v-for="gym in filteredGyms"
-            :key="gym.id"
+            :key="gym._id"
             class="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+            @click="handleDetailGym(gym._id)"
         >
           <div class="relative h-48 w-full">
-            <img :src="gym.image" :alt="gym.name" class="w-full h-full object-cover" />
+            <img :src="gym.heroImage" :alt="gym.name" class="w-full h-full object-cover" />
           </div>
           <div class="p-4">
             <div class="flex justify-between items-start mb-2">
@@ -201,7 +160,7 @@ const filteredGyms = computed(() => {
                 </svg>
                 <span class="text-sm font-semibold">{{ gym.rating }}</span>
               </div>
-              <span class="text-xs text-gray-500 ml-2">({{ gym.reviews }} reviews)</span>
+              <span class="text-xs text-gray-500 ml-2">(123 reviews)</span>
             </div>
             <div class="flex flex-wrap gap-1 mb-4">
                 <span

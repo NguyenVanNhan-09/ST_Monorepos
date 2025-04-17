@@ -14,5 +14,9 @@
   "packageManager": "pnpm@10.6.4",
   "devDependencies": {
     "concurrently": "^9.1.2"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.4",
+    "tailwindcss": "^4.1.4"
   }
 }

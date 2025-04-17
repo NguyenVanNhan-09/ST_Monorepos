@@ -2,10 +2,17 @@ import {Module} from '@nestjs/common';
 import {AppController} from './app.controller';
 import {AppService} from './app.service';
 import {MongooseModule} from "@nestjs/mongoose";
+import {GymsModule} from './modules/gyms/gyms.module';
+import {ConfigModule} from "@nestjs/config";
 
 @Module({
     imports: [
-        MongooseModule.forRoot('mongodb+srv://NhanNguyen:G106qWf2ZfEsh99o@cluster.sg7cl.mongodb.net/gym?retryWrites=true&w=majority&appName=cluster'),
+        ConfigModule.forRoot({
+            isGlobal: true,
+            envFilePath: '.env',
+        }),
+        MongooseModule.forRoot(process.env.MONGOODB_URL!),
+        GymsModule,
     ],
     controllers: [AppController],
     providers: [AppService],
