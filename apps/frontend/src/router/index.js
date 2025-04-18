@@ -26,7 +26,7 @@ const router = createRouter({
                     component: DetailRoom
                 },
                 {
-                    path: 'my-room',
+                    path: 'myroom',
                     name: "MyRooms",
                     component: MyRoomsGym
                 },
