@@ -22,9 +22,11 @@
           <BuildingIcon class="h-16 w-16 mx-auto text-gray-300 mb-4"/>
           <h2 class="text-xl font-semibold mb-2">Chưa đăng ký phòng tập nào</h2>
           <p class="text-gray-600 mb-6">Bạn chưa đăng ký thành viên tại bất kỳ phòng tập nào.</p>
-          <button class="px-6 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors">
-            Khám phá phòng tập
-          </button>
+          <a href="/">
+            <button class="px-6 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors cursor-pointer">
+              Khám phá phòng tập
+            </button>
+          </a>
         </div>
 
         <!-- Registered gyms -->
@@ -41,6 +43,17 @@
               ]"
             >
               Tất cả
+            </button>
+            <button
+                @click="activeFilter = 'processing'"
+                :class="[
+                'px-3 py-1.5 text-sm font-medium rounded-md transition-colors',
+                activeFilter === 'processing'
+                  ? 'bg-primary text-white'
+                  : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+              ]"
+            >
+              Đang xử lý
             </button>
             <button
                 @click="activeFilter = 'active'"
@@ -90,13 +103,16 @@
                       'px-2 py-1 text-xs font-bold rounded-full',
                       gym.status === 'active' ? 'bg-green-500 text-white' :
                       gym.status === 'expiring' ? 'bg-yellow-500 text-white' :
-                      'bg-red-500 text-white'
+                        gym.status === 'processing' ? 'bg-blue-500 text-white' :
+                          gym.status === 'expired' ? 'bg-red-500 text-white' :
+                            'bg-gray-500 text-white',
                     ]"
                   >
                     {{
                       gym.status === 'active' ? 'Đang hoạt động' :
                           gym.status === 'expiring' ? 'Sắp hết hạn' :
-                              'Đã hết hạn'
+                              gym.status === 'processing' ? 'Đang xử lý' :
+                                  'Đã hết hạn'
                     }}
                   </span>
                 </div>
@@ -226,10 +242,8 @@
 </template>
 
 <script setup>
-import {ref, computed} from 'vue';
+import {ref, computed, onMounted} from 'vue';
 import {
-  Menu as MenuIcon,
-  Dumbbell as DumbbellIcon,
   Plus as PlusIcon,
   Building as BuildingIcon,
   Clock as ClockIcon,
@@ -237,86 +251,35 @@ import {
   QrCode as QrCodeIcon,
   Users as UsersIcon,
   Percent as PercentIcon,
-  Facebook as FacebookIcon,
-  Twitter as TwitterIcon,
-  Instagram as InstagramIcon,
-  Youtube as YoutubeIcon
 } from 'lucide-vue-next';
-
-// Mobile menu state
-const mobileMenuOpen = ref(false);
-
-// Toggle mobile menu
-const toggleMobileMenu = () => {
-  mobileMenuOpen.value = !mobileMenuOpen.value;
-};
+import {gymsServices} from "@/services/GymService.js";
 
 // Active filter
 const activeFilter = ref('all');
 
 // Mock data for registered gyms
-const registeredGyms = ref([
-  {
-    id: 1,
-    name: 'Elite Fitness Center',
-    address: '789 Broadway, New York, NY 10003',
-    image: 'https://placehold.co/600x400',
-    status: 'active',
-    membershipType: 'Premium Membership',
-    endDate: '31/12/2023',
-    membershipId: 'EFC-10045872',
-    hours: '5:00 AM - 11:00 PM',
-    startDate: '01/01/2023'
-  },
-  {
-    id: 2,
-    name: 'PowerLift Gym',
-    address: '456 Park Ave, New York, NY 10022',
-    image: 'https://placehold.co/600x400',
-    status: 'expiring',
-    membershipType: 'Basic Membership',
-    endDate: '15/11/2023',
-    membershipId: 'PLG-20087654',
-    hours: '6:00 AM - 10:00 PM',
-    startDate: '15/05/2023'
-  },
-  {
-    id: 3,
-    name: 'CrossFit Zone',
-    address: '101 5th Ave, New York, NY 10003',
-    image: 'https://placehold.co/600x400',
-    status: 'expired',
-    membershipType: 'Elite Membership',
-    endDate: '30/09/2023',
-    membershipId: 'CFZ-30012345',
-    hours: '5:30 AM - 9:30 PM',
-    startDate: '30/03/2023'
-  },
-  {
-    id: 4,
-    name: 'Urban Fitness',
-    address: '202 Madison Ave, New York, NY 10016',
-    image: 'https://placehold.co/600x400',
-    status: 'active',
-    membershipType: 'Annual Membership',
-    endDate: '15/08/2024',
-    membershipId: 'UF-40056789',
-    hours: '24/7 Access',
-    startDate: '15/08/2023'
-  },
-  {
-    id: 5,
-    name: 'Strength & Conditioning',
-    address: '303 Lexington Ave, New York, NY 10016',
-    image: 'https://placehold.co/600x400',
-    status: 'active',
-    membershipType: 'Premium Membership',
-    endDate: '01/03/2024',
-    membershipId: 'SC-50034567',
-    hours: '6:00 AM - 11:00 PM',
-    startDate: '01/03/2023'
+const registeredGyms = ref([]);
+
+const fetchAuthGym = async () => {
+  try {
+    const res = await gymsServices.getAllAuthGyms();
+    registeredGyms.value = res?.data?.map(gym => ({
+      id: gym?._id || "",
+      name: gym?.gym?.name || "",
+      address: gym?.gym?.address || "",
+      image: gym?.gym?.heroImage || "",
+      status: gym?.status || "",
+      membershipType: `${gym?.gym?.plan?.name} + ${gym?.gym?.plan?.period}` || "",
+      endDate: gym?.gym?.plan?.endDate || "",
+      membershipId: gym?.membershipId || "",
+      hours: gym?.gym?.hours || "",
+      startDate: gym?.gym?.plan?.startDate || "",
+    }));
+    console.log(registeredGyms.value);
+  } catch (error) {
+    console.error('Error fetching gyms:', error);
   }
-]);
+}
 
 // Computed properties for filtered gyms
 const filteredGyms = computed(() => {
@@ -326,6 +289,8 @@ const filteredGyms = computed(() => {
     return registeredGyms.value.filter(gym => gym.status === 'expiring');
   } else if (activeFilter.value === 'expired') {
     return registeredGyms.value.filter(gym => gym.status === 'expired');
+  } else if (activeFilter.value === 'processing') {
+    return registeredGyms.value.filter(gym => gym.status === 'processing');
   }
 
   return registeredGyms.value;
@@ -345,6 +310,11 @@ const renewMembership = (gymId) => {
 const bookClass = (gymId) => {
   alert(`Đặt lớp học tại phòng tập ${gymId}`);
 };
+
+
+onMounted(() => {
+  fetchAuthGym();
+});
 </script>
 
 <style>

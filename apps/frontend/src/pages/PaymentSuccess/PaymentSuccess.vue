@@ -127,7 +127,7 @@
                 <div class="grid grid-cols-2 gap-4 relative z-10">
                   <div>
                     <div class="text-sm opacity-80 mb-1">ID Thành viên</div>
-                    <div class="font-bold">EFC-10045872</div>
+                    <div class="font-bold">{{infoAuthGym?.membershipId}}</div>
                   </div>
                   <div>
                     <div class="text-sm opacity-80 mb-1">Ngày hết hạn</div>
@@ -188,16 +188,20 @@
                 <DownloadIcon class="h-5 w-5 mr-2"/>
                 Tải hóa đơn
               </button>
-              <button
-                  class="flex-1 px-4 py-3 border border-primary text-primary rounded-md hover:bg-primary hover:text-white transition-colors flex items-center justify-center">
-                <CalendarIcon class="h-5 w-5 mr-2"/>
-                Đặt lịch tập
-              </button>
-              <button
-                  class="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors flex items-center justify-center">
-                <HomeIcon class="h-5 w-5 mr-2"/>
-                Về trang chủ
-              </button>
+              <a href="/my-room">
+                <button
+                    class="flex-1 px-4 py-3 border border-primary text-primary rounded-md hover:text-white transition-colors flex items-center justify-center">
+                  <CalendarIcon class="h-5 w-5 mr-2"/>
+                  Xem phòng tập
+                </button>
+              </a>
+              <a href="/">
+                <button
+                    class="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors flex items-center justify-center">
+                  <HomeIcon class="h-5 w-5 mr-2"/>
+                  Về trang chủ
+                </button>
+              </a>
             </div>
           </div>
         </div>

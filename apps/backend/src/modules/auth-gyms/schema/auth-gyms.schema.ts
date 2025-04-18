@@ -1,7 +1,7 @@
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {Document, Schema as MongooseSchema} from 'mongoose';
 
-@Schema({ _id: false })
+@Schema({_id: false})
 export class Info {
     @Prop()
     address: string;
@@ -33,7 +33,7 @@ export class Info {
 
 export const InfoSchema = SchemaFactory.createForClass(Info);
 
-@Schema({ _id: false })
+@Schema({_id: false})
 export class Plan {
     @Prop()
     _id: string;
@@ -62,7 +62,7 @@ export class Plan {
 
 export const PlanSchema = SchemaFactory.createForClass(Plan);
 
-@Schema({ _id: false })
+@Schema({_id: false})
 export class Gym {
     @Prop()
     address: string;
@@ -79,7 +79,7 @@ export class Gym {
     @Prop()
     rating: number;
 
-    @Prop({ type: PlanSchema }) // <<== Đây nè
+    @Prop({type: PlanSchema}) // <<== Đây nè
     plan: Plan;
 
     @Prop()
@@ -88,13 +88,19 @@ export class Gym {
 
 export const GymSchema = SchemaFactory.createForClass(Gym);
 
-@Schema({ timestamps: true })
+@Schema({timestamps: true})
 export class AuthGyms {
-    @Prop({ type: InfoSchema })
+    @Prop({type: InfoSchema})
     info: Info;
 
-    @Prop({ type: GymSchema })
+    @Prop({type: GymSchema})
     gym: Gym;
+
+    @Prop({default: "processing"})
+    status: string;
+
+    @Prop()
+    membershipId: string;
 }
 
 export type AuthGymsDocument = AuthGyms & Document;

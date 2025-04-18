@@ -20,9 +20,15 @@ const getAuthGymById = (id) => {
     return Axios.get(url);
 }
 
+const getAllAuthGyms = (payload) => {
+    const url = "/auth-gyms";
+    return Axios.get(url, payload);
+}
+
 export const gymsServices = {
     getAllGyms,
     getGymById,
     ceateAuthGym,
-    getAuthGymById
+    getAuthGymById,
+    getAllAuthGyms
 }

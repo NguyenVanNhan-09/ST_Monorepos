@@ -15,4 +15,9 @@ export class AuthGymsController {
     getById(@Param('id') id: string) {
         return this.authGymService.getById(id);
     }
+
+    @Get()
+    getAll() {
+        return this.authGymService.getAll();
+    }
 }
