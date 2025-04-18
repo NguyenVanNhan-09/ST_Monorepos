@@ -54,7 +54,7 @@ const toggleMobileMenu = () => {
           <a href="#" class="text-gray-700 hover:text-primary transition-colors">About</a>
         </nav>
         <div class="flex space-x-4 mt-4">
-          <button class="px-4 py-2 text-sm font-medium text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition-colors">
+          <button class="px-4 py-2 text-sm font-medium text-primary border border-primary rounded-md hover:text-white transition-colors">
             Sign In
           </button>
           <button class="px-4 py-2 text-sm font-medium bg-primary text-white rounded-md hover:bg-primary/90 transition-colors">
