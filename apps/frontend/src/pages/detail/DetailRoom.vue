@@ -288,7 +288,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {onMounted, ref} from 'vue';
 import {
   ChevronRight as ChevronRightIcon,
@@ -306,6 +306,7 @@ import {
 import {useRoute, useRouter} from "vue-router";
 import {gymsServices} from "@/services/GymService.js";
 import formatDate from "@/utils/formatDate.js";
+import {IGym, MembershipPlan} from "@/interfaces/IGym";
 
 const route = useRoute();
 const router = useRouter();
@@ -321,9 +322,9 @@ const SquareFeetIcon = {
   `
 };
 
-const gym = ref({});
+const gym = ref<IGym>({});
 
-const fetchGymDetails = async (id) => {
+const fetchGymDetails = async (id: string) => {
   try {
     const res = await gymsServices.getGymById(id)
     gym.value = res?.data
@@ -332,7 +333,7 @@ const fetchGymDetails = async (id) => {
   }
 };
 
-const handlePayment = (gym, selsectMembershipPlans) => {
+const handlePayment = (gym: IGym, selsectMembershipPlans: MembershipPlan) => {
   const now = new Date();
   const startDate = formatDate(now);
 

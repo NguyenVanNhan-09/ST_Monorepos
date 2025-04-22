@@ -1,15 +1,16 @@
-<script setup>
+<script setup lang="ts">
 import {ref, computed, onMounted} from 'vue';
 import {
   Search as SearchIcon,
 } from 'lucide-vue-next';
 import {gymsServices} from "@/services/GymService.js";
 import {useRoute, useRouter} from "vue-router";
+import { IGym } from "@/interfaces/IGym";
 
 const router = useRouter();
 const route = useRoute();
 
-const gyms = ref([]);
+const gyms = ref<IGym[]>([]);
 
 const fetchGyms = async () => {
   try {
@@ -33,7 +34,7 @@ const activeFilters = ref(["All Gyms"]);
 
 const searchQuery = ref("");
 
-const toggleFilter = (filter) => {
+const toggleFilter = (filter: string) => {
   if (filter === "All Gyms") {
     // If "All Gyms" is clicked, make it the only active filter
     activeFilters.value = ["All Gyms"];

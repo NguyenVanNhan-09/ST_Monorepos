@@ -256,7 +256,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {onMounted, ref} from 'vue';
 import {
   Dumbbell as DumbbellIcon,
@@ -272,17 +272,13 @@ import {
 } from 'lucide-vue-next';
 import {gymsServices} from "@/services/GymService.js";
 import {useRoute} from "vue-router";
+import {PaymentResponse} from "@/interfaces/IAuthGym";
 
 const route = useRoute();
 
-const infoAuthGym = ref()
-const orderNumber = ref('123456789');
-const startDate = ref(new Date().toLocaleDateString('vi-VN'));
-const endDate = ref(new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toLocaleDateString('vi-VN'));
-const paymentMethod = ref('Thẻ tín dụng (VISA ****1234)');
-const paymentDate = ref(new Date().toLocaleDateString('vi-VN'));
+const infoAuthGym = ref<PaymentResponse>()
 
-const fetchById = async (id) => {
+const fetchById = async (id: string | number) => {
   try {
     const res = await gymsServices.getAuthGymById(id);
     if (res && res.data) {

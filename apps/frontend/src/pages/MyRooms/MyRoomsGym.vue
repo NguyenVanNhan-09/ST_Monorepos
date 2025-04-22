@@ -241,7 +241,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {ref, computed, onMounted} from 'vue';
 import {
   Plus as PlusIcon,
@@ -253,12 +253,13 @@ import {
   Percent as PercentIcon,
 } from 'lucide-vue-next';
 import {gymsServices} from "@/services/GymService.js";
+import {RegisteredGym} from "@/interfaces/IRegisteredGyms.js";
 
 // Active filter
 const activeFilter = ref('all');
 
 // Mock data for registered gyms
-const registeredGyms = ref([]);
+const registeredGyms = ref<RegisteredGym>([]);
 
 const fetchAuthGym = async () => {
   try {
@@ -297,17 +298,17 @@ const filteredGyms = computed(() => {
 });
 
 // Function to view gym details
-const viewGym = (gymId) => {
+const viewGym = (gymId: string | number) => {
   alert(`Xem chi tiết phòng tập ${gymId}`);
 };
 
 // Function to renew membership
-const renewMembership = (gymId) => {
+const renewMembership = (gymId: string | number) => {
   alert(`Gia hạn thành viên cho phòng tập ${gymId}`);
 };
 
 // Function to book a class
-const bookClass = (gymId) => {
+const bookClass = (gymId: string | number) => {
   alert(`Đặt lớp học tại phòng tập ${gymId}`);
 };
 

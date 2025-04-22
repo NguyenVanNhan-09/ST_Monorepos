@@ -373,7 +373,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {markRaw, ref} from 'vue';
 import {
   ChevronRight as ChevronRightIcon,
@@ -387,18 +387,19 @@ import {
 } from 'lucide-vue-next';
 import {gymsServices} from "@/services/GymService.js";
 import {useRouter} from "vue-router";
+import {FormData, GymPayment} from "@/interfaces/IFormDataPayment";
 
 // CVV tooltip state
 const router = useRouter()
 const showCvvTooltip = ref(false);
-const gym = ref(
+const gym = ref<GymPayment>(
     localStorage.getItem('payment')
         ? JSON.parse(localStorage.getItem('payment'))
         : null
 )
 
 // Form data
-const formData = ref({
+const formData = ref<FormData>({
   firstName: '',
   lastName: '',
   email: '',
