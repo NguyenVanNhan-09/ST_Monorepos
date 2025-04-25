@@ -253,13 +253,13 @@ import {
   Percent as PercentIcon,
 } from 'lucide-vue-next';
 import {gymsServices} from "@/services/GymService.js";
-import {RegisteredGym} from "@/interfaces/IRegisteredGyms.js";
+import {RegisteredGym} from "@/interfaces";
 
 // Active filter
 const activeFilter = ref('all');
 
 // Mock data for registered gyms
-const registeredGyms = ref<RegisteredGym>([]);
+const registeredGyms = ref<RegisteredGym[]>([]);
 
 const fetchAuthGym = async () => {
   try {

@@ -24,11 +24,11 @@ export interface GymInfo {
     hours: string;
     name: string;
     rating: number;
-    plan: Plan;
+    plan: PlanGymInfo;
     totalPrice: number;
 }
 
-export interface Plan {
+export interface PlanGymInfo {
     _id: string | number;
     name: string;
     price: string | number;

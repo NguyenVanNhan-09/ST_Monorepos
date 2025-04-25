@@ -272,7 +272,7 @@ import {
 } from 'lucide-vue-next';
 import {gymsServices} from "@/services/GymService.js";
 import {useRoute} from "vue-router";
-import {PaymentResponse} from "@/interfaces/IAuthGym";
+import {PaymentResponse} from "@/interfaces";
 
 const route = useRoute();
 
@@ -292,7 +292,7 @@ const fetchById = async (id: string | number) => {
 }
 
 onMounted(() => {
-  const id = route.params.id;
+  const id = String(route.params.id);
   if (id) {
     fetchById(id);
   } else {

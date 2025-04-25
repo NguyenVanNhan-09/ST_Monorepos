@@ -387,7 +387,7 @@ import {
 } from 'lucide-vue-next';
 import {gymsServices} from "@/services/GymService.js";
 import {useRouter} from "vue-router";
-import {FormData, GymPayment} from "@/interfaces/IFormDataPayment";
+import {FormData, GymPayment} from "@/interfaces";
 
 // CVV tooltip state
 const router = useRouter()

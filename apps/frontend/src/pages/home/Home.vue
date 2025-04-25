@@ -5,7 +5,7 @@ import {
 } from 'lucide-vue-next';
 import {gymsServices} from "@/services/GymService.js";
 import {useRoute, useRouter} from "vue-router";
-import { IGym } from "@/interfaces/IGym";
+import { IGym } from "@/interfaces";
 
 const router = useRouter();
 const route = useRoute();

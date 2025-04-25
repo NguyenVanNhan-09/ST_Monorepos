@@ -306,7 +306,7 @@ import {
 import {useRoute, useRouter} from "vue-router";
 import {gymsServices} from "@/services/GymService.js";
 import formatDate from "@/utils/formatDate.js";
-import {IGym, MembershipPlan} from "@/interfaces/IGym";
+import {IGym, MembershipPlan} from "@/interfaces"
 
 const route = useRoute();
 const router = useRouter();
@@ -373,7 +373,7 @@ const handlePayment = (gym: IGym, selsectMembershipPlans: MembershipPlan) => {
 
 
 onMounted(() => {
-  const gymId = route.params.id;
+  const gymId = String(route.params.id);
   fetchGymDetails(gymId);
 });
 </script>
