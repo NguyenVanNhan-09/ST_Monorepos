@@ -224,7 +224,7 @@
                      class="pb-4 border-b last:border-0 last:pb-0">
                   <div class="flex justify-between items-start mb-2">
                     <h4 class="font-medium">{{ plan.name }}</h4>
-                    <span class="font-bold text-primary">{{ plan.price }}/{{ plan.period }}</span>
+                    <span class="font-bold text-primary">${{ plan.price }}/{{ plan.period }}</span>
                   </div>
                   <p class="text-gray-600 text-sm mb-3">{{ plan.description }}</p>
                   <button
